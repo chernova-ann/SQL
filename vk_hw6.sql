@@ -1,6 +1,6 @@
 
--- 1. Создать все необходимые внешние ключи и диаграмму отношений.
--- 2. Создать и заполнить таблицы лайков и постов.
+-- 1. РЎРѕР·РґР°С‚СЊ РІСЃРµ РЅРµРѕР±С…РѕРґРёРјС‹Рµ РІРЅРµС€РЅРёРµ РєР»СЋС‡Рё Рё РґРёР°РіСЂР°РјРјСѓ РѕС‚РЅРѕС€РµРЅРёР№.
+-- 2. РЎРѕР·РґР°С‚СЊ Рё Р·Р°РїРѕР»РЅРёС‚СЊ С‚Р°Р±Р»РёС†С‹ Р»Р°Р№РєРѕРІ Рё РїРѕСЃС‚РѕРІ.
 
 
 USE vk;
@@ -151,7 +151,7 @@ ALTER TABLE likes
 SELECT * FROM likes;
 
 
--- 3. Подсчитать общее количество лайков десяти самых молодых пользователей.
+-- 3. РџРѕРґСЃС‡РёС‚Р°С‚СЊ РѕР±С‰РµРµ РєРѕР»РёС‡РµСЃС‚РІРѕ Р»Р°Р№РєРѕРІ РґРµСЃСЏС‚Рё СЃР°РјС‹С… РјРѕР»РѕРґС‹С… РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№.
 
 
 SELECT * FROM profiles;
@@ -162,35 +162,35 @@ UPDATE profiles SET
     birthday = birthday - INTERVAL 10 YEAR 
     WHERE DATE_FORMAT(birthday, '%Y') >= 2012;
 
-SELECT user_id FROM profiles ORDER BY birthday DESC LIMIT 10; # user_id 10 самых молодых пользователей
+SELECT user_id FROM profiles ORDER BY birthday DESC LIMIT 10; # user_id 10 Г±Г Г¬Г»Гµ Г¬Г®Г«Г®Г¤Г»Гµ ГЇГ®Г«ГјГ§Г®ГўГ ГІГҐГ«ГҐГ©
 
 SELECT * FROM likes LIMIT 20;
 
 SELECT * FROM likes
 	WHERE user_id IN (
 		SELECT * FROM (
-			SELECT user_id FROM profiles ORDER by birthday DESC LIMIT 10) as user_id); # Лайки проставленные этими пользователями
+			SELECT user_id FROM profiles ORDER by birthday DESC LIMIT 10) as user_id); # Г‹Г Г©ГЄГЁ ГЇГ°Г®Г±ГІГ ГўГ«ГҐГ­Г­Г»ГҐ ГЅГІГЁГ¬ГЁ ГЇГ®Г«ГјГ§Г®ГўГ ГІГҐГ«ГїГ¬ГЁ
 
 SELECT COUNT(*) as sum_likes FROM likes WHERE id IN (
 	SELECT id FROM likes
 	WHERE user_id IN (
 		SELECT * FROM (SELECT user_id FROM profiles ORDER BY birthday DESC LIMIT 10) as user_id));
 
--- 4. Определить кто больше поставил лайков (всего) - мужчины или женщины?
+-- 4. РћРїСЂРµРґРµР»РёС‚СЊ РєС‚Рѕ Р±РѕР»СЊС€Рµ РїРѕСЃС‚Р°РІРёР» Р»Р°Р№РєРѕРІ (РІСЃРµРіРѕ) - РјСѓР¶С‡РёРЅС‹ РёР»Рё Р¶РµРЅС‰РёРЅС‹?
 
 SELECT * FROM profiles LIMIT 20;
 
-SELECT user_id, gender FROM profiles WHERE gender = 'M'; #  user_id мужчин
+SELECT user_id, gender FROM profiles WHERE gender = 'M'; #  user_id Г¬ГіГ¦Г·ГЁГ­
 
 SELECT COUNT(*) as sum_likes_male FROM likes WHERE id IN (
 	SELECT id FROM likes
 	WHERE user_id IN (
-		SELECT * FROM (SELECT user_id FROM profiles WHERE gender = 'M') as user_id)); # Количество лайков, сделанные мужчинами
+		SELECT * FROM (SELECT user_id FROM profiles WHERE gender = 'M') as user_id)); # ГЉГ®Г«ГЁГ·ГҐГ±ГІГўГ® Г«Г Г©ГЄГ®Гў, Г±Г¤ГҐГ«Г Г­Г­Г»ГҐ Г¬ГіГ¦Г·ГЁГ­Г Г¬ГЁ
 	
 SELECT COUNT(*) as sum_likes_female FROM likes WHERE id IN (
 	SELECT id FROM likes
 	WHERE user_id IN (
-		SELECT * FROM (SELECT user_id FROM profiles WHERE gender = 'F') as user_id)); # Количество лайков, сделанные женщинами
+		SELECT * FROM (SELECT user_id FROM profiles WHERE gender = 'F') as user_id)); # ГЉГ®Г«ГЁГ·ГҐГ±ГІГўГ® Г«Г Г©ГЄГ®Гў, Г±Г¤ГҐГ«Г Г­Г­Г»ГҐ Г¦ГҐГ­Г№ГЁГ­Г Г¬ГЁ
 
 SELECT (CASE 
  WHEN (SELECT COUNT(*) as sum_likes_female FROM likes WHERE id IN (
@@ -199,33 +199,33 @@ SELECT (CASE
 	   (SELECT COUNT(*) as sum_likes_male FROM likes WHERE id IN (
 	SELECT id FROM likes
 	WHERE user_id IN (
-		SELECT * FROM (SELECT user_id FROM profiles WHERE gender = 'M') as user_id))) THEN 'Женщины поставили больше лайков'
+		SELECT * FROM (SELECT user_id FROM profiles WHERE gender = 'M') as user_id))) THEN 'Г†ГҐГ­Г№ГЁГ­Г» ГЇГ®Г±ГІГ ГўГЁГ«ГЁ ГЎГ®Г«ГјГёГҐ Г«Г Г©ГЄГ®Гў'
   WHEN (SELECT COUNT(*) as sum_likes_female FROM likes WHERE id IN (
 	SELECT id FROM likes
 	WHERE user_id IN (SELECT * FROM (SELECT user_id FROM profiles WHERE gender = 'F') as user_id))) <
 	   (SELECT COUNT(*) as sum_likes_male FROM likes WHERE id IN (
 	SELECT id FROM likes
 	WHERE user_id IN (
-		SELECT * FROM (SELECT user_id FROM profiles WHERE gender = 'M') as user_id))) THEN 'Мужчины поставили больше лайков'
-  ELSE 'Одинаковое количество лайков у женщин и мужчин'
+		SELECT * FROM (SELECT user_id FROM profiles WHERE gender = 'M') as user_id))) THEN 'ГЊГіГ¦Г·ГЁГ­Г» ГЇГ®Г±ГІГ ГўГЁГ«ГЁ ГЎГ®Г«ГјГёГҐ Г«Г Г©ГЄГ®Гў'
+  ELSE 'ГЋГ¤ГЁГ­Г ГЄГ®ГўГ®ГҐ ГЄГ®Г«ГЁГ·ГҐГ±ГІГўГ® Г«Г Г©ГЄГ®Гў Гі Г¦ГҐГ­Г№ГЁГ­ ГЁ Г¬ГіГ¦Г·ГЁГ­'
   END) AS comparison;
 
 
--- 5. Найти 10 пользователей, которые проявляют наименьшую активность в 
--- использовании социальной сети(критерии активности необходимо определить самостоятельно).
--- Критерий: 1) сумма количества media файлов,
+-- 5. РќР°Р№С‚Рё 10 РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№, РєРѕС‚РѕСЂС‹Рµ РїСЂРѕСЏРІР»СЏСЋС‚ РЅР°РёРјРµРЅСЊС€СѓСЋ Р°РєС‚РёРІРЅРѕСЃС‚СЊ РІ 
+-- РёСЃРїРѕР»СЊР·РѕРІР°РЅРёРё СЃРѕС†РёР°Р»СЊРЅРѕР№ СЃРµС‚Рё(РєСЂРёС‚РµСЂРёРё Р°РєС‚РёРІРЅРѕСЃС‚Рё РЅРµРѕР±С…РѕРґРёРјРѕ РѕРїСЂРµРґРµР»РёС‚СЊ СЃР°РјРѕСЃС‚РѕСЏС‚РµР»СЊРЅРѕ).
+-- РљСЂРёС‚РµСЂРёР№: 1) СЃСѓРјРјР° РєРѕР»РёС‡РµСЃС‚РІР° media С„Р°Р№Р»РѕРІ,
 	   (SELECT id, 0 as activite FROM users WHERE id NOT IN (SELECT user_id FROM media GROUP by user_id))
         UNION
        (SELECT user_id as id, COUNT(*) as activite FROM media GROUP BY user_id);
---           2) количества posts, 
+--           2) РєРѕР»РёС‡РµСЃС‚РІР° posts, 
        (SELECT id, 0 as activite FROM users WHERE id NOT IN (SELECT user_id FROM posts GROUP by user_id))
        UNION 
        (SELECT user_id as id, COUNT(*) as activite FROM posts GROUP BY user_id);
---           3) количества messages, 
+--           3) РєРѕР»РёС‡РµСЃС‚РІР° messages, 
        (SELECT id, 0 as activite FROM users WHERE id NOT IN (SELECT from_user_id FROM messages GROUP by from_user_id))
         UNION
        (SELECT from_user_id as id, COUNT(*) as activite FROM messages GROUP BY from_user_id);
---           4) количества likes (чем меньше сумма, тем пользователь менее активен).
+--           4) РєРѕР»РёС‡РµСЃС‚РІР° likes (С‡РµРј РјРµРЅСЊС€Рµ СЃСѓРјРјР°, С‚РµРј РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ РјРµРЅРµРµ Р°РєС‚РёРІРµРЅ).
        (SELECT id, 0 as activite FROM users WHERE id NOT IN (SELECT user_id FROM likes GROUP by user_id))
         UNION
        (SELECT user_id as id, COUNT(*) as activite FROM likes GROUP BY user_id);
