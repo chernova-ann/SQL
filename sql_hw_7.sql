@@ -28,18 +28,18 @@ ALTER TABLE products
 SELECT*FROM catalogs;
 
 INSERT INTO products VALUES
-   (1, 'AMD Athlon X4 840 OEM', 'FM2+, 4 x 3100 МГц, L2 - 4 МБ, 2хDDR3-2133 МГц, TDP 65 Вт', 1850, 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-   (2, 'Aerocool VX PLUS 500W [VX-500 PLUS]', '500 Вт, EPS12V, 20+4 pin, 1x 4+4 pin CPU, 3 шт SATA, 1x 6+2 pin PCI-E]', 2199, 4, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-   (3, 'Intel Celeron G4900 OEM', 'LGA 1151-v2, 2 x 3100 МГц, L2 - 512 КБ, L3 - 2 МБ, 2хDDR4-2400 МГц, Intel UHD Graphics 610, TDP 54 Вт', 2999, 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-   (4, 'Kingston HyperX FURY Black [HX426C16FB3K2/16] 16 ГБ', '[DDR4, 8 ГБx2 шт, 2666 МГц, PC21300, 16-18-18-29.25', 6999, 6, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-   (5, 'GIGABYTE GeForce GTX 1660 SUPER OC [GV-N166SOC-6GD 1.0]', 'PCI-E 3.0, 6 ГБ GDDR6, 192 бит, 1530 МГц - 1830 МГц, DisplayPort (3 шт), HDMI', 19799, 3, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-   (6, 'MD Ryzen 3 1200 OEM', 'AM4, 4 x 3100 МГц, L2 - 2 МБ, L3 - 8 МБ, 2хDDR4-2667 МГц, TDP 65 Вт', 3799, 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-   (7, 'be quiet SYSTEM POWER 9 700W [BN248]', '700 Вт, 80+ Bronze, EPS12V, APFC, 20+4 pin, 1x 4+4 pin CPU, 6 шт SATA, 4x 6+2 pin PCI-E', 6350, 4, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-   (8, 'MSI X570-A PRO', 'AM4, AMD X570, 4xDDR4-4400 МГц, 2xPCI-Ex16, аудио 7.1, Standard-ATX', 12999, 2, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-   (9, 'ASRock B450 Pro4', 'AM4, AMD B450, 4xDDR4-3200 МГц, 2xPCI-Ex16, аудио 7.1, Standard-ATX', 6950, 2, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-   (10, '1 ТБ Жесткий диск WD Blue [WD10EZEX]', 'SATA III, 6 Гбит/с, 7200 об/мин, кэш память - 64 МБ', 3199, 5, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-   (11, 'MSI AMD Radeon RX 570 ARMOR OC [RX 570 ARMOR 4G OC]', 'PCI-E 3.0, 4 ГБ GDDR5, 256 бит, 1168 МГц - 1268 МГц, HDMI, DisplayPort (3 шт), DVI-D', 11199, 3, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-   (12, 'GIGABYTE GA-AB350M-DS3H V2', 'AM4, AMD B350, 4xDDR4-3200 МГц, 1xPCI-Ex16, аудио 7.1, Micro-ATX', 4899, 2, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+   (1, 'AMD Athlon X4 840 OEM', 'FM2+, 4 x 3100 РњР“С†, L2 - 4 РњР‘, 2С…DDR3-2133 РњР“С†, TDP 65 Р’С‚', 1850, 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+   (2, 'Aerocool VX PLUS 500W [VX-500 PLUS]', '500 Р’С‚, EPS12V, 20+4 pin, 1x 4+4 pin CPU, 3 С€С‚ SATA, 1x 6+2 pin PCI-E]', 2199, 4, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+   (3, 'Intel Celeron G4900 OEM', 'LGA 1151-v2, 2 x 3100 РњР“С†, L2 - 512 РљР‘, L3 - 2 РњР‘, 2С…DDR4-2400 РњР“С†, Intel UHD Graphics 610, TDP 54 Р’С‚', 2999, 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+   (4, 'Kingston HyperX FURY Black [HX426C16FB3K2/16] 16 Р“Р‘', '[DDR4, 8 Р“Р‘x2 С€С‚, 2666 РњР“С†, PC21300, 16-18-18-29.25', 6999, 6, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+   (5, 'GIGABYTE GeForce GTX 1660 SUPER OC [GV-N166SOC-6GD 1.0]', 'PCI-E 3.0, 6 Р“Р‘ GDDR6, 192 Р±РёС‚, 1530 РњР“С† - 1830 РњР“С†, DisplayPort (3 С€С‚), HDMI', 19799, 3, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+   (6, 'MD Ryzen 3 1200 OEM', 'AM4, 4 x 3100 РњР“С†, L2 - 2 РњР‘, L3 - 8 РњР‘, 2С…DDR4-2667 РњР“С†, TDP 65 Р’С‚', 3799, 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+   (7, 'be quiet SYSTEM POWER 9 700W [BN248]', '700 Р’С‚, 80+ Bronze, EPS12V, APFC, 20+4 pin, 1x 4+4 pin CPU, 6 С€С‚ SATA, 4x 6+2 pin PCI-E', 6350, 4, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+   (8, 'MSI X570-A PRO', 'AM4, AMD X570, 4xDDR4-4400 РњР“С†, 2xPCI-Ex16, Р°СѓРґРёРѕ 7.1, Standard-ATX', 12999, 2, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+   (9, 'ASRock B450 Pro4', 'AM4, AMD B450, 4xDDR4-3200 РњР“С†, 2xPCI-Ex16, Р°СѓРґРёРѕ 7.1, Standard-ATX', 6950, 2, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+   (10, '1 РўР‘ Р–РµСЃС‚РєРёР№ РґРёСЃРє WD Blue [WD10EZEX]', 'SATA III, 6 Р“Р±РёС‚/СЃ, 7200 РѕР±/РјРёРЅ, РєСЌС€ РїР°РјСЏС‚СЊ - 64 РњР‘', 3199, 5, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+   (11, 'MSI AMD Radeon RX 570 ARMOR OC [RX 570 ARMOR 4G OC]', 'PCI-E 3.0, 4 Р“Р‘ GDDR5, 256 Р±РёС‚, 1168 РњР“С† - 1268 РњР“С†, HDMI, DisplayPort (3 С€С‚), DVI-D', 11199, 3, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+   (12, 'GIGABYTE GA-AB350M-DS3H V2', 'AM4, AMD B350, 4xDDR4-3200 РњР“С†, 1xPCI-Ex16, Р°СѓРґРёРѕ 7.1, Micro-ATX', 4899, 2, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
    
 SELECT*FROM products; 
 
@@ -62,25 +62,25 @@ ALTER TABLE orders_products
     CURRENT_TIMESTAMP 
   FROM products;
  
--- 1. Составьте список пользователей users, которые осуществили хотя бы оди заказ orders в интернет магазине.
+-- 1. РЎРѕСЃС‚Р°РІСЊС‚Рµ СЃРїРёСЃРѕРє РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№ users, РєРѕС‚РѕСЂС‹Рµ РѕСЃСѓС‰РµСЃС‚РІРёР»Рё С…РѕС‚СЏ Р±С‹ РѕРґРё Р·Р°РєР°Р· orders РІ РёРЅС‚РµСЂРЅРµС‚ РјР°РіР°Р·РёРЅРµ.
      
 SELECT*FROM orders;
 SELECT*FROM users;
 
--- В таблице orders есть все пользователи, которые делали заказы (то есть 1 заказ и более), пользователей, которые не делали заказы нет, 
--- Группируем сделавших заказы по количеству заказов, считаем их.
+-- Р’ С‚Р°Р±Р»РёС†Рµ orders РµСЃС‚СЊ РІСЃРµ РїРѕР»СЊР·РѕРІР°С‚РµР»Рё, РєРѕС‚РѕСЂС‹Рµ РґРµР»Р°Р»Рё Р·Р°РєР°Р·С‹ (С‚Рѕ РµСЃС‚СЊ 1 Р·Р°РєР°Р· Рё Р±РѕР»РµРµ), РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№, РєРѕС‚РѕСЂС‹Рµ РЅРµ РґРµР»Р°Р»Рё Р·Р°РєР°Р·С‹ РЅРµС‚, 
+-- Р“СЂСѓРїРїРёСЂСѓРµРј СЃРґРµР»Р°РІС€РёС… Р·Р°РєР°Р·С‹ РїРѕ РєРѕР»РёС‡РµСЃС‚РІСѓ Р·Р°РєР°Р·РѕРІ, СЃС‡РёС‚Р°РµРј РёС….
  
 SELECT user_id as id, COUNT(*) AS quantity FROM orders GROUP BY user_id;
 
--- Выводим имена пользователей из таблицы users по полученным id.
+-- Р’С‹РІРѕРґРёРј РёРјРµРЅР° РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№ РёР· С‚Р°Р±Р»РёС†С‹ users РїРѕ РїРѕР»СѓС‡РµРЅРЅС‹Рј id.
 
 SELECT id, name FROM users WHERE id IN (SELECT user_id as id FROM orders GROUP BY user_id);
 
--- С помощью JOIN
+-- РЎ РїРѕРјРѕС‰СЊСЋ JOIN
 
 SELECT u.id, u.name, COUNT(*) AS quantity FROM users AS u JOIN orders AS o WHERE u.id = o.user_id GROUP BY id;
 
--- 2. Выведите список товаров products и разделов catalogs, который соответствует товару.
+-- 2. Р’С‹РІРµРґРёС‚Рµ СЃРїРёСЃРѕРє С‚РѕРІР°СЂРѕРІ products Рё СЂР°Р·РґРµР»РѕРІ catalogs, РєРѕС‚РѕСЂС‹Р№ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓРµС‚ С‚РѕРІР°СЂСѓ.
 
 SELECT*FROM products;
 SELECT*FROM catalogs;
@@ -89,9 +89,9 @@ SELECT id, name, catalog_id FROM products;
 
 SELECT p.id, p.name, c.name FROM products AS p JOIN catalogs AS c ON catalog_id = c.id ORDER BY p.id;
 
--- 3. Пусть имеется таблица flights (id, from, to) и таблица городов cities (label, name). 
--- Поля from, to и label содержат английские названия городов, поле name - русское. 
--- Выведите список рейсов flights с русскими названиями городов.
+-- 3. РџСѓСЃС‚СЊ РёРјРµРµС‚СЃСЏ С‚Р°Р±Р»РёС†Р° flights (id, from, to) Рё С‚Р°Р±Р»РёС†Р° РіРѕСЂРѕРґРѕРІ cities (label, name). 
+-- РџРѕР»СЏ from, to Рё label СЃРѕРґРµСЂР¶Р°С‚ Р°РЅРіР»РёР№СЃРєРёРµ РЅР°Р·РІР°РЅРёСЏ РіРѕСЂРѕРґРѕРІ, РїРѕР»Рµ name - СЂСѓСЃСЃРєРѕРµ. 
+-- Р’С‹РІРµРґРёС‚Рµ СЃРїРёСЃРѕРє СЂРµР№СЃРѕРІ flights СЃ СЂСѓСЃСЃРєРёРјРё РЅР°Р·РІР°РЅРёСЏРјРё РіРѕСЂРѕРґРѕРІ.
 
 DROP TABLE IF EXISTS flights;
 CREATE TABLE flights (
@@ -114,11 +114,11 @@ INSERT INTO flights VALUES
    (5, 'moscow', 'kazan');
 
 INSERT INTO cities VALUES
-   ('moscow', 'Москва'),
-   ('novgorod', 'Новгород'),
-   ('irkutsk', 'Иркутск'),
-   ('omsk', 'Омск'),
-   ('kazan', 'Казань');
+   ('moscow', 'РњРѕСЃРєРІР°'),
+   ('novgorod', 'РќРѕРІРіРѕСЂРѕРґ'),
+   ('irkutsk', 'РСЂРєСѓС‚СЃРє'),
+   ('omsk', 'РћРјСЃРє'),
+   ('kazan', 'РљР°Р·Р°РЅСЊ');
 
 SELECT * FROM flights;
 
@@ -136,10 +136,4 @@ SELECT dep.id AS id, dep.departure, ar.arrival FROM
      FROM flights AS f JOIN cities AS c 
      ON f.arrival = c.label) AS ar
    WHERE dep.id = ar.id ORDER BY id;
-
-
-    
-
-
-
 
