@@ -1,0 +1,133 @@
+-- 3. Подсчитать общее количество лайков десяти самых молодых пользователей.
+
+-- Если считать лайки, поставленные самыми молодыми пользователями другим.
+SELECT * FROM profiles;
+
+(SELECT user_id FROM profiles ORDER BY birthday DESC LIMIT 10); # user_id 10 самых молодых пользователей
+
+SELECT * FROM likes LIMIT 20;
+
+SELECT * FROM likes
+	WHERE user_id IN (
+		SELECT * FROM (
+			SELECT user_id FROM profiles ORDER by birthday DESC LIMIT 10) as user_id); # Лайки проставленные этими пользователями
+	
+SELECT COUNT(*) as sum_likes FROM likes WHERE user_id IN
+(SELECT * FROM (SELECT user_id FROM profiles ORDER BY birthday DESC LIMIT 10) as user_id);
+
+SELECT SUM(total_likes) FROM  
+(SELECT COUNT(likes.id) AS total_likes
+ FROM profiles 
+ LEFT JOIN likes
+ ON likes.user_id = profiles.user_id  
+ GROUP BY profiles.user_id 
+ ORDER BY profiles.birthday DESC LIMIT 10) AS young_likes
+ ;
+
+-- Если считать лайки, которые поставили другие самым молодым пользователям.
+SELECT SUM(likes_total) FROM  
+  (SELECT 
+    (SELECT COUNT(*) FROM likes WHERE target_id = profiles.user_id AND target_type_id = 2) AS likes_total  
+    FROM profiles 
+    ORDER BY birthday 
+    DESC LIMIT 10) AS user_likes; 
+   
+ SELECT COUNT(*) 
+FROM (
+SELECT COUNT(likes.id) AS total_likes
+ FROM profiles 
+ LEFT JOIN likes
+ ON likes.target_id = profiles.user_id AND likes.target_type_id = 2
+ GROUP BY profiles.user_id 
+ ORDER BY profiles.birthday DESC LIMIT 10) AS young_likes WHERE total_likes != 0
+ ;
+
+
+
+-- 4. Определить кто больше поставил лайков (всего) - мужчины или женщины?
+
+-- Исходный код (из разбора дз на вебинаре)
+
+ SELECT
+	(SELECT gender FROM profiles WHERE user_id = likes.user_id) AS gender,
+	COUNT(*) AS total
+    FROM likes
+    GROUP BY gender
+    ORDER BY total DESC
+    LIMIT 1;  
+   
+-- С помощью join. 
+SELECT profiles.gender, COUNT(*) AS total
+  FROM likes 
+   JOIN profiles 
+    ON likes.user_id = profiles.user_id 
+    GROUP BY gender
+    ORDER BY total DESC
+    LIMIT 1;
+  
+
+-- 5. Найти 10 пользователей, которые проявляют наименьшую активность в 
+-- использовании социальной сети(критерии активности необходимо определить самостоятельно).
+
+-- Исходный код.
+-- Критерий: 1) сумма количества media файлов,
+	   (SELECT id, 0 as activite FROM users WHERE id NOT IN (SELECT user_id FROM media GROUP by user_id))
+        UNION
+       (SELECT user_id as id, COUNT(*) as activite FROM media GROUP BY user_id);
+--           2) количества posts, 
+       (SELECT id, 0 as activite FROM users WHERE id NOT IN (SELECT user_id FROM posts GROUP by user_id))
+       UNION 
+       (SELECT user_id as id, COUNT(*) as activite FROM posts GROUP BY user_id);
+--           3) количества messages, 
+       (SELECT id, 0 as activite FROM users WHERE id NOT IN (SELECT from_user_id FROM messages GROUP by from_user_id))
+        UNION
+       (SELECT from_user_id as id, COUNT(*) as activite FROM messages GROUP BY from_user_id);
+--           4) количества likes (чем меньше сумма, тем пользователь менее активен).
+       (SELECT id, 0 as activite FROM users WHERE id NOT IN (SELECT user_id FROM likes GROUP by user_id))
+        UNION
+       (SELECT user_id as id, COUNT(*) as activite FROM likes GROUP BY user_id);
+
+
+SELECT id, SUM(activite) as total_activite FROM (
+	SELECT * FROM (
+	   (SELECT id, 0 as activite FROM users WHERE id NOT IN (SELECT user_id FROM media GROUP by user_id))
+        UNION
+       (SELECT user_id as id, COUNT(*) as activite FROM media GROUP BY user_id)
+        ) as tmp_med
+    UNION ALL
+    SELECT * FROM (
+        (SELECT id, 0 as activite FROM users WHERE id NOT IN (SELECT user_id FROM posts GROUP by user_id))
+        UNION 
+        (SELECT user_id as id, COUNT(*) as activite FROM posts GROUP BY user_id)
+         ) as tmp_pos
+    UNION ALL
+    SELECT * FROM (
+	    (SELECT id, 0 as activite FROM users WHERE id NOT IN (SELECT from_user_id FROM messages GROUP by from_user_id))
+         UNION
+        (SELECT from_user_id as id, COUNT(*) as activite FROM messages GROUP BY from_user_id)
+         ) as tmp_mes
+    UNION ALL 
+    SELECT * FROM (
+        (SELECT id, 0 as activite FROM users WHERE id NOT IN (SELECT user_id FROM likes GROUP by user_id))
+         UNION
+        (SELECT user_id as id, COUNT(*) as activite FROM likes GROUP BY user_id)
+        ) as tmp_lik
+  ) as tmp_table
+ GROUP BY id  ORDER BY total_activite LIMIT 10;
+
+-- С помощью join.
+SELECT users.id, first_name, last_name, COUNT(*) AS total_likes
+  FROM users
+    JOIN media
+      ON users.id = media.user_id
+    JOIN likes
+      ON users.id = likes.user_id
+    JOIN posts
+      ON users.id = posts.user_id
+    JOIN messages
+      ON users.id = messages.from_user_id
+  GROUP BY users.id
+  ORDER BY total_likes
+  LIMIT 10;
+
+
