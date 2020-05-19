@@ -1,0 +1,161 @@
+1. В базе данных shop и sample присутствуют одни и те же таблицы, учебной базы данных. 
+Переместите запись id = 1 из таблицы shop.users в таблицу sample.users. Используйте транзакции.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| example            |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sample             |
+| shop               |
+| sys                |
+| vk                 |
+| wildberris         |
++--------------------+
+9 rows in set (0,00 sec)
+
+mysql> use shop;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> select * from users;
++----+------------+-------------+---------------------+---------------------+
+| id | name       | birthday_at | created_at          | updated_at          |
++----+------------+-------------+---------------------+---------------------+
+|  1 | Ann        | 1981-10-23  | 2020-05-03 11:52:27 | 2020-05-03 11:52:27 |
+|  2 | Valeriy    | 1973-11-25  | 2020-05-03 11:52:27 | 2020-05-03 11:52:27 |
+|  3 | Konstantin | 1985-12-10  | 2020-05-03 11:52:27 | 2020-05-03 11:52:27 |
+|  4 | Vera       | 1990-01-07  | 2020-05-03 11:52:27 | 2020-05-03 11:52:27 |
+|  5 | Nadejda    | 1994-02-03  | 2020-05-03 11:52:27 | 2020-05-03 11:52:27 |
+|  6 | Lubov      | 1993-03-05  | 2020-05-03 11:52:27 | 2020-05-03 11:52:27 |
+|  7 | Petr       | 2000-09-17  | 2020-05-03 11:52:27 | 2020-05-03 11:52:27 |
+|  8 | Ivan       | 2005-08-17  | 2020-05-03 11:52:27 | 2020-05-03 11:52:27 |
+|  9 | Pavel      | 1999-07-07  | 2020-05-03 11:52:27 | 2020-05-03 11:52:27 |
+| 10 | Matvei     | 1999-06-12  | 2020-05-03 11:52:27 | 2020-05-03 11:52:27 |
++----+------------+-------------+---------------------+---------------------+
+10 rows in set (0,00 sec)
+
+mysql> use sample;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> desc users;
++-------+-----------------+------+-----+---------+----------------+
+| Field | Type            | Null | Key | Default | Extra          |
++-------+-----------------+------+-----+---------+----------------+
+| id    | bigint unsigned | NO   | PRI | NULL    | auto_increment |
+| name  | varchar(255)    | YES  |     | NULL    |                |
++-------+-----------------+------+-----+---------+----------------+
+2 rows in set (0,00 sec)
+
+mysql> select * from users;
+Empty set (0,00 sec)
+
+mysql> START TRANSCRIPTION;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'TRANSCRIPTION' at line 1
+mysql> START TRANSACTION;
+Query OK, 0 rows affected (0,00 sec)
+
+mysql> INSERT INTO sample.users SELECT id, name FROM shop.users WHERE id = 1;
+Query OK, 1 row affected (0,01 sec)
+Records: 1  Duplicates: 0  Warnings: 0
+
+mysql> COMMIT;
+Query OK, 0 rows affected (0,02 sec)
+
+mysql> SELECT * FROM users;
++----+------+
+| id | name |
++----+------+
+|  1 | Ann  |
++----+------+
+1 row in set (0,00 sec)
+
+mysql> 
+
+2. Создайте представление, которое выводит название name товарной позиции из таблицы products
+ и соответствующее название каталога name из таблицы catalogs.
+
+mysql> select id, name, catalog_id FROM products;
++----+---------------------------------------------------------+------------+
+| id | name                                                    | catalog_id |
++----+---------------------------------------------------------+------------+
+|  1 | AMD Athlon X4 840 OEM                                   |          1 |
+|  2 | Aerocool VX PLUS 500W [VX-500 PLUS]                     |          4 |
+|  3 | Intel Celeron G4900 OEM                                 |          1 |
+|  4 | Kingston HyperX FURY Black [HX426C16FB3K2/16] 16 ГБ     |          6 |
+|  5 | GIGABYTE GeForce GTX 1660 SUPER OC [GV-N166SOC-6GD 1.0] |          3 |
+|  6 | MD Ryzen 3 1200 OEM                                     |          1 |
+|  7 | be quiet SYSTEM POWER 9 700W [BN248]                    |          4 |
+|  8 | MSI X570-A PRO                                          |          2 |
+|  9 | ASRock B450 Pro4                                        |          2 |
+| 10 | 1 ТБ Жесткий диск WD Blue [WD10EZEX]                    |          5 |
+| 11 | MSI AMD Radeon RX 570 ARMOR OC [RX 570 ARMOR 4G OC]     |          3 |
+| 12 | GIGABYTE GA-AB350M-DS3H V2                              |          2 |
++----+---------------------------------------------------------+------------+
+12 rows in set (0,00 sec)
+
+mysql> select * FROM catalogs;
++----+-------------------------------------+
+| id | name                                |
++----+-------------------------------------+
+|  1 | Процессоры                          |
+|  2 | Мат.платы                           |
+|  3 | Видеокарты                          |
+|  4 | Блок питания                        |
+|  5 | Жесткие диски                       |
+|  6 | Оперативная память                  |
++----+-------------------------------------+
+6 rows in set (0,01 sec)
+
+mysql> SELECT p.name, c.name FROM prodacts p JOIN catalogs c ON c.id = p.catalog_id;
+ERROR 1146 (42S02): Table 'shop.prodacts' doesn't exist
+mysql> SELECT p.name, c.name FROM products p JOIN catalogs c ON c.id = p.catalog_id;
++---------------------------------------------------------+-------------------------------------+
+| name                                                    | name                                |
++---------------------------------------------------------+-------------------------------------+
+| AMD Athlon X4 840 OEM                                   | Процессоры                          |
+| Intel Celeron G4900 OEM                                 | Процессоры                          |
+| MD Ryzen 3 1200 OEM                                     | Процессоры                          |
+| MSI X570-A PRO                                          | Мат.платы                           |
+| ASRock B450 Pro4                                        | Мат.платы                           |
+| GIGABYTE GA-AB350M-DS3H V2                              | Мат.платы                           |
+| GIGABYTE GeForce GTX 1660 SUPER OC [GV-N166SOC-6GD 1.0] | Видеокарты                          |
+| MSI AMD Radeon RX 570 ARMOR OC [RX 570 ARMOR 4G OC]     | Видеокарты                          |
+| Aerocool VX PLUS 500W [VX-500 PLUS]                     | Блок питания                        |
+| be quiet SYSTEM POWER 9 700W [BN248]                    | Блок питания                        |
+| 1 ТБ Жесткий диск WD Blue [WD10EZEX]                    | Жесткие диски                       |
+| Kingston HyperX FURY Black [HX426C16FB3K2/16] 16 ГБ     | Оперативная память                  |
++---------------------------------------------------------+-------------------------------------+
+12 rows in set (0,00 sec)
+
+mysql> CREATE VIEW prod_cat AS SELECT p.name, c.name FROM products p JOIN catalogs c ON c.id = p.catalog_id;
+ERROR 1060 (42S21): Duplicate column name 'name'
+mysql> CREATE VIEW prod_cat AS SELECT p.name AS product, c.name AS catalog FROM products p JOIN catalogs c ON c.id = p.catalog_id;
+Query OK, 0 rows affected (0,01 sec)
+
+mysql> SELECT * FROM prod_cat;
++---------------------------------------------------------+-------------------------------------+
+| product                                                 | catalog                             |
++---------------------------------------------------------+-------------------------------------+
+| AMD Athlon X4 840 OEM                                   | Процессоры                          |
+| Intel Celeron G4900 OEM                                 | Процессоры                          |
+| MD Ryzen 3 1200 OEM                                     | Процессоры                          |
+| MSI X570-A PRO                                          | Мат.платы                           |
+| ASRock B450 Pro4                                        | Мат.платы                           |
+| GIGABYTE GA-AB350M-DS3H V2                              | Мат.платы                           |
+| GIGABYTE GeForce GTX 1660 SUPER OC [GV-N166SOC-6GD 1.0] | Видеокарты                          |
+| MSI AMD Radeon RX 570 ARMOR OC [RX 570 ARMOR 4G OC]     | Видеокарты                          |
+| Aerocool VX PLUS 500W [VX-500 PLUS]                     | Блок питания                        |
+| be quiet SYSTEM POWER 9 700W [BN248]                    | Блок питания                        |
+| 1 ТБ Жесткий диск WD Blue [WD10EZEX]                    | Жесткие диски                       |
+| Kingston HyperX FURY Black [HX426C16FB3K2/16] 16 ГБ     | Оперативная память                  |
++---------------------------------------------------------+-------------------------------------+
+12 rows in set (0,01 sec)
+
+mysql> 
